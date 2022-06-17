@@ -2,11 +2,40 @@
   "apps": [
     {
       "os": "windows",
-      "packages": ["hello"]
+      "osPackages": ["hello"]
     },
     {
-      "os": "ubuntu",
-      "packages": ["git", "ca-certificates", "curl", "gnupg", "lsb-release"]
+      "os": "linux-ubuntu",
+      "osPackages": [
+        "apt-transport-https",
+        "build-essential",
+        "ca-certificates",
+        "cmake",
+        "curl",
+        "git",
+        "gnupg",
+        "htop",
+        "lsb-release",
+        "mmv",
+        "neovim",
+        "pkg-config",
+        "python3-dev",
+        "tmux"
+      ]
+    },
+    {
+      "os": "linux",
+      "snapPackages": [
+        "bitwarden",
+        "code --classic",
+        "jdownloader2",
+        "lireoffice",
+        "pycharm-community --classic",
+        "signal-desktop",
+        "spotify",
+        "sublime-text --classic",
+        "vlc"
+      ]
     }
   ]
 }

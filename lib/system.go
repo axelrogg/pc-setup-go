@@ -11,9 +11,9 @@ import (
 )
 
 type System struct {
-	Name     string
-	Distro   string
-	Packages []string
+	Name         string
+	OsPackages   []string
+	SnapPackages []string
 }
 
 type Apps struct {
@@ -21,8 +21,9 @@ type Apps struct {
 }
 
 type App struct {
-	Os       string   `json:"os"`
-	Packages []string `json:"packages"`
+	Os           string   `json:"os"`
+	OsPackages   []string `json:"osPackages"`
+	SnapPackages []string `json:"snapPackages"`
 }
 
 var supportedLinuxDistros = []string{
@@ -68,11 +69,10 @@ func GetSystem() System {
 
 	case "windows":
 		system.Name = os
-		system.Distro = ""
 
 	case "linux":
-		system.Name = os
-		system.Distro = GetLinuxDistro()
+		distro := GetLinuxDistro()
+		system.Name = fmt.Sprintf("%s-%s", "linux", distro)
 
 	default:
 		log.Fatal("Unsupported Operating System error")
@@ -97,18 +97,20 @@ func GetSystemPackages(fileName string, system *System) {
 	// Unmarshal `byteVal` into `apps`
 	json.Unmarshal(byteVal, &apps)
 
-	var currentOs string
-	currentOs = system.Distro
-	if system.Name == "windows" {
-		currentOs = system.Name
-	}
-
 	// Copy packages from `apps.json` file to the `System` struct.
 	for i := 0; i < len(apps.Apps); i++ {
+
 		// we only care about the packages for the current OS
-		if apps.Apps[i].Os != currentOs {
+		if !strings.Contains(system.Name, apps.Apps[i].Os) {
 			continue
 		}
-		system.Packages = apps.Apps[i].Packages
+
+		if apps.Apps[i].OsPackages != nil {
+			system.OsPackages = apps.Apps[i].OsPackages
+		}
+
+		if apps.Apps[i].SnapPackages != nil {
+			system.SnapPackages = apps.Apps[i].SnapPackages
+		}
 	}
 }
