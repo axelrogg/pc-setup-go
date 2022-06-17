@@ -11,9 +11,9 @@ import (
 )
 
 type System struct {
-	name     string
-	distro   string
-	packages []string
+	Name     string
+	Distro   string
+	Packages []string
 }
 
 type Apps struct {
@@ -67,12 +67,12 @@ func GetSystem() System {
 	switch os {
 
 	case "windows":
-		system.name = os
-		system.distro = ""
+		system.Name = os
+		system.Distro = ""
 
 	case "linux":
-		system.name = os
-		system.distro = GetLinuxDistro()
+		system.Name = os
+		system.Distro = GetLinuxDistro()
 
 	default:
 		log.Fatal("Unsupported Operating System error")
@@ -98,9 +98,9 @@ func GetSystemPackages(fileName string, system *System) {
 	json.Unmarshal(byteVal, &apps)
 
 	var currentOs string
-	currentOs = system.distro
-	if system.name == "windows" {
-		currentOs = system.name
+	currentOs = system.Distro
+	if system.Name == "windows" {
+		currentOs = system.Name
 	}
 
 	// Copy packages from `apps.json` file to the `System` struct.
@@ -109,6 +109,6 @@ func GetSystemPackages(fileName string, system *System) {
 		if apps.Apps[i].Os != currentOs {
 			continue
 		}
-		system.packages = apps.Apps[i].Packages
+		system.Packages = apps.Apps[i].Packages
 	}
 }
