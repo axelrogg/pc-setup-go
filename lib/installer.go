@@ -1,15 +1,19 @@
 package lib
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func InstallPkg(cmd string, pkg string) bool {
-	iCmd := fmt.Sprintf("%s %s", cmd, pkg)
-	_, err := ExecuteCmd(iCmd, "-y")
+	icmd := fmt.Sprintf("%s %s", cmd, pkg)
+	_, err := ExecuteCmd(icmd)
 	return err == nil
 }
 
-func UbuntuInstallPkg(pkg string) bool {
-	return InstallPkg("apt install", pkg)
+func UbuntuInstallPkg(pkgs []string) bool {
+
+	return InstallPkg("apt install", strings.Join(pkgs, " "))
 }
 
 func WindowsInstallPkg(pkg string) bool {
