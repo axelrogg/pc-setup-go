@@ -1,0 +1,12 @@
+{
+  "apps": [
+    {
+      "os": "windows",
+      "packages": ["hello"]
+    },
+    {
+      "os": "ubuntu",
+      "packages": ["git", "ca-certificates", "curl", "gnupg", "lsb-release"]
+    }
+  ]
+}
