@@ -6,9 +6,6 @@ import (
 
 func ExecuteCmd(name string, args ...string) (string, error) {
 
-	cmd := exec.Command(name, args...)
-
-	out, err := cmd.CombinedOutput()
-
+	out, err := exec.Command(name, args...).Output()
 	return string(out), err
 }
